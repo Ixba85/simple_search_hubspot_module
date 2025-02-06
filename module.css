@@ -1,0 +1,107 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 50px;
+    font-weight: bold;
+    color: #F36E21;
+    overflow-y: scroll;  /* Always show scrollbar to prevent layout shift */
+}
+
+.container {
+    display: flex;  /* Use flexbox for alignment */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;  /* Set a max-width to limit container size */
+    margin: 0 auto;  /* Center the container horizontally */
+}
+
+input[type="text"] {
+    width: 60%;  /* Set a reasonable width for the input */
+    max-width: 400px;  /* Prevent the input from becoming too large */
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    color: white;
+    background-color: #3A833C;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+button:focus {
+    outline: none;
+    background-color: #2e6a2f;
+}
+
+mark.highlight {
+    background-color: yellow;
+    color: inherit;
+    font-weight: normal;
+}
+
+html {
+    overflow-y: scroll;  /* Always show scrollbar to prevent shifting */
+}
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+}
+/* Responsive adjustments for phones */
+@media only screen and (max-width: 767px) {
+    .container {
+        max-width: 90%;  /* Max width for smaller screens */
+    }
+
+    input[type="text"] {
+        width: 100%;  /* Full width for small screens */
+    }
+
+    button {
+        width: 100%;  /* Make the button take full width on small screens */
+    }
+}
+
+/* Responsive adjustments for tablets */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    .container {
+        max-width: 80%;  /* Allow more flexibility for tablet screens */
+    }
+
+    input[type="text"] {
+        width: 80%;  /* Slightly wider input field on tablets */
+    }
+
+    button {
+        width: auto;  /* Ensure the button size remains appropriate */
+    }
+}
+
+/* Responsive adjustments for desktops */
+@media only screen and (min-width: 1025px) {
+    .container {
+        max-width: 600px;  /* Standard max width for desktops */
+    }
+
+    input[type="text"] {
+        width: 60%;  /* Standard width for desktop */
+    }
+
+    button {
+        width: auto;
+    }
+}
