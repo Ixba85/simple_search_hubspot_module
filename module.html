@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Highlight and Scroll</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            font-weight: bold;
+            color: #F36E21;
+            overflow-y: scroll;  /* Always show scrollbar to prevent layout shift */
+        }
+        .container {
+            display: inline-block;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        input[type="text"] {
+            width: 60%;
+            max-width: 400px;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            color: white;
+            background-color: #3A833C;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+        button:focus {
+            outline: none;
+        }
+        mark.highlight {
+            background-color: yellow;
+            color: inherit;
+            font-weight: normal;
+        }
+        html {
+            overflow-y: scroll;  /* Always show scrollbar to prevent shifting */
+        } 
+      .placeholder{
+        opacity: 0.55;
+      }
+      /* Responsive adjustments for phones */
+        @media only screen and (max-width: 767px) {
+            .container {
+                max-width: 90%;  /* Max width for smaller screens */
+            }
+
+            input[type="text"] {
+                width: 100%;  /* Full width for small screens */
+            }
+
+            button {
+                width: 100%;  /* Make the button take full width on small screens */
+            }
+        }
+
+        /* Responsive adjustments for tablets */
+        @media only screen and (min-width: 768px) and (max-width: 1024px) {
+            .container {
+                max-width: 80%;  /* Allow more flexibility for tablet screens */
+            }
+
+            input[type="text"] {
+                width: 80%;  /* Slightly wider input field on tablets */
+            }
+
+            button {
+                width: auto;  /* Ensure the button size remains appropriate */
+            }
+        }
+
+        /* Responsive adjustments for desktops */
+        @media only screen and (min-width: 1025px) {
+            .container {
+                max-width: 600px;  /* Standard max width for desktops */
+            }
+
+            input[type="text"] {
+                width: 60%;  /* Standard width for desktop */
+            }
+
+            button {
+                width: auto;
+            }
+        }
+    </style>
+</head>
+  <body>
+    <div class="container">
+        <div class="title">
+            {% inline_text field="title_menu" value="{{ module.title_menu }}" %} 
+        </div>
+          <input
+            class="placeholder"
+            type="text" 
+            id="searchInput" 
+            placeholder="{{ module.input.placeholder or "Search" }}"    >
+
+          <button id="searchBtn">
+              {% inline_text 
+                  field="input.button"
+                  value="{{ module.input.button|default('Search') }}"
+               %}
+          </button>
+
+    <script>
+        function searchAndHighlight(event) {
+            event.preventDefault();  // Prevent default form submission or reloading
+
+            const searchInput = document.getElementById('searchInput').value.trim();
+
+            if (!searchInput) {
+                alert("Please enter a search query.");
+                return;
+            }
+
+            // Clear previous highlights before performing a new search
+            clearHighlights();
+
+            const regExp = new RegExp(searchInput, "gi");
+            const firstMatchElement = highlightMatches(document.body, regExp);
+
+            if (firstMatchElement) {
+                firstMatchElement.scrollIntoView({ behavior: "smooth", block: "center" });
+            }
+
+            // Remove focus to avoid jumping caused by focus styling
+            document.getElementById('searchInput').blur();
+            document.getElementById('searchBtn').blur();
+        }
+
+        function clearHighlights() {
+            const highlights = document.querySelectorAll('mark.highlight');
+            highlights.forEach(mark => {
+                const parent = mark.parentNode;
+                parent.replaceChild(document.createTextNode(mark.textContent), mark);
+            });
+        }
+
+        function highlightMatches(element, regExp) {
+            let firstMatch = null;
+
+            if (element.hasChildNodes()) {
+                element.childNodes.forEach(child => {
+                    const match = highlightMatches(child, regExp);
+                    if (!firstMatch && match) {
+                        firstMatch = match;
+                    }
+                });
+            } else if (element.nodeType === Text.TEXT_NODE) {
+                const parent = element.parentNode;
+                const replacedText = element.textContent.replace(regExp, match => {
+                    if (!firstMatch) {
+                        firstMatch = parent;
+                    }
+                    return `<mark class="highlight">${match}</mark>`;
+                });
+                const newElement = document.createElement("span");
+                newElement.innerHTML = replacedText;
+                parent.replaceChild(newElement, element);
+            }
+
+            return firstMatch;
+        }
+
+        // Add click event listener
+        document.getElementById('searchBtn').addEventListener('click', searchAndHighlight);
+    </script>
+  </body>
+</html>
