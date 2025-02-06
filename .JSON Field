@@ -1,0 +1,59 @@
+[
+ {
+  "allow_new_line": false,
+  "display_width": null,
+  "id": "562d8d73-fcb4-1254-a250-7437ac3a05b3",
+  "label": "title menu",
+  "locked": false,
+  "name": "title_menu",
+  "required": false,
+  "show_emoji_picker": false,
+  "type": "text",
+  "validation_regex": ""
+ },
+ {
+  "children": [
+   {
+    "allow_new_line": false,
+    "default": "",
+    "display_width": null,
+    "id": "04868b4e-f562-5475-9528-1bd96fb3fc43",
+    "label": "button text",
+    "locked": false,
+    "name": "button",
+    "placeholder": "",
+    "required": false,
+    "show_emoji_picker": false,
+    "type": "text",
+    "validation_regex": ""
+   },
+   {
+    "allow_new_line": false,
+    "default": "",
+    "display_width": null,
+    "id": "37269a07-1002-c54f-8fac-05da84c28e69",
+    "label": "Placeholder text",
+    "locked": false,
+    "name": "placeholder",
+    "required": false,
+    "show_emoji_picker": false,
+    "type": "text",
+    "validation_regex": ""
+   }
+  ],
+  "default": {
+   "button": "",
+   "placeholder": ""
+  },
+  "display_width": null,
+  "expanded": false,
+  "group_occurrence_meta": null,
+  "id": "23a3f319-6391-24a6-1688-60d0d1307c56",
+  "label": "Search input field",
+  "locked": false,
+  "name": "input",
+  "required": false,
+  "tab": "CONTENT",
+  "type": "group"
+ }
+]
